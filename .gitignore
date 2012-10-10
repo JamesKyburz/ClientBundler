@@ -71,3 +71,4 @@ src/packages/
 /src/*.dgml
 
 src/.nuget/packages.config
+src/ClientBundler/*.nupkg

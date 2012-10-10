@@ -9,12 +9,6 @@ using System.Web.Mvc;
 
 /*@using ClientBundler;
 
-@{
-  ClientBundler.Options.ScriptPath = "Scripts";
-  ClientBundler.Options.TemplatePath = "Templates";
-  ClientBundler.Options.StylePath = "Content";
-}
-
 @Html.RenderStyles("app")
 @Html.RenderScripts("app")
 @Html.RenderTemplates()
@@ -22,15 +16,16 @@ using System.Web.Mvc;
 
 namespace ClientBundler
 {
-  public static class Options
+  public class Options
   {
-    public static string TemplatePath, ScriptPath, StylePath, PreCompiledPath;
+    public static string TemplatePath, ScriptPath, StylePath;
+    public static bool PreCompiled;
     static Options()
     {
-      ScriptPath = "Scripts";
-      StylePath = "Content";
-      TemplatePath = "Templates";
-      PreCompiledPath = System.Configuration.ConfigurationManager.AppSettings["AssetsPrecompiledPath"];
+      ScriptPath = System.Configuration.ConfigurationManager.AppSettings["Assets.ScriptPath"] ?? "Scripts";
+      StylePath = System.Configuration.ConfigurationManager.AppSettings["Assets.StylePath"] ?? "Content";
+      TemplatePath = System.Configuration.ConfigurationManager.AppSettings["Assets.TemplatePath"] ?? "Templates";
+      PreCompiled = "true" == System.Configuration.ConfigurationManager.AppSettings["Assets.Precompiled"];
     }
   }
 
@@ -150,34 +145,33 @@ namespace ClientBundler
     public static IHtmlString RenderStyles(this HtmlHelper helper, string name)
     {
       return helper.Raw(
-        null == Options.PreCompiledPath ?
-          new StringBuilder()
-            .Append("<link rel=\"stylesheet/less\" type=\"text/css\" href=\"" + Options.StylePath + "/" + name + ".less" + "\">")
-            .Append("<script src=\"https://raw.github.com/cloudhead/less.js/master/dist/less-1.1.0.js\"></script>")
-            .ToString()
-          :
-          new AssetUtility(Options.PreCompiledPath + @"\" + Options.ScriptPath).GetAssets("")
+        Options.PreCompiled ?
+          new AssetUtility(Options.StylePath).GetAssets("")
            .First()
            .LinkTag()
+          :
+          new StringBuilder()
+            .Append("<link rel=\"stylesheet/less\" type=\"text/css\" href=\"" + Options.StylePath + "/" + name + ".less" + "\">")
+            .Append("<script src=\"https://raw.github.com/cloudhead/less.js/master/dist/less-1.3.0.min.js\"></script>")
+            .ToString()
       );
     }
 
     public static IHtmlString RenderScripts(this HtmlHelper helper, string name)
     {
       return helper.Raw(
-        null == Options.PreCompiledPath ?
-          string.Join(Environment.NewLine,
-            new HashSet<string>(
-              new ScriptManifest(name).GetAssets()
-                .Select(x => x.ScriptTag())
-            )
-          ) +
-          "<script src=\"http://coffeescript.org/extras/coffee-script.js\"></script>"
-       :
-       new AssetUtility(Options.PreCompiledPath + @"\" + Options.ScriptPath).GetAssets("")
-        .First()
-        .ScriptTag()
-
+        Options.PreCompiled ?
+         new AssetUtility(Options.ScriptPath).GetAssets("")
+           .First()
+           .ScriptTag()
+         :
+         string.Join(Environment.NewLine,
+           new HashSet<string>(
+             new ScriptManifest(name).GetAssets()
+               .Select(x => x.ScriptTag())
+           )
+         ) +
+         "<script src=\"http://coffeescript.org/extras/coffee-script.js\"></script>"
       );
     }
 
