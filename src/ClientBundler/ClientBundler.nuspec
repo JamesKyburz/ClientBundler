@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>ClientBundler</id>
+    <version>0.1</version>
+    <title>ClientBundler</title>
+    <authors>James Kyburz</authors>
+    <owners>James Kyburz</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>ClientBundler</description>
+    <releaseNotes>ClientBundler</releaseNotes>
+    <copyright>Copyright 2012</copyright>
+    <tags>CoffeeScript Less Bundle</tags>
+  </metadata>
+</package>
