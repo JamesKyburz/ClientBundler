@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>ClientBundler</id>
-    <version>0.5</version>
+    <version>0.9</version>
     <title>ClientBundler</title>
     <authors>James Kyburz</authors>
     <owners>James Kyburz</owners>

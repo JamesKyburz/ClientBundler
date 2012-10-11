@@ -16,16 +16,30 @@ using System.Web.Mvc;
 
 namespace ClientBundler
 {
-  public class Options
+  class Options
   {
-    public static string TemplatePath, ScriptPath, StylePath;
-    public static bool PreCompiled;
-    static Options()
+    public static string ScriptPath
     {
-      ScriptPath = System.Configuration.ConfigurationManager.AppSettings["Assets.ScriptPath"] ?? "Scripts";
-      StylePath = System.Configuration.ConfigurationManager.AppSettings["Assets.StylePath"] ?? "Content";
-      TemplatePath = System.Configuration.ConfigurationManager.AppSettings["Assets.TemplatePath"] ?? "Templates";
-      PreCompiled = "true" == System.Configuration.ConfigurationManager.AppSettings["Assets.Precompiled"];
+      get { return Setting("Assets.ScriptPath") ?? "Scripts"; }
+    }
+
+    public static string StylePath
+    {
+      get { return Setting("Assets.StylePath") ?? "Content"; }
+    }
+
+    public static string TemplatePath
+    {
+      get { return Setting("Assets.TemplatePath") ?? "Templates"; }
+    }
+
+    public static bool PreCompiled
+    {
+      get { return "true" == Setting("Assets.Precompiled"); }
+    }
+
+    static string Setting(string key) {
+      return System.Configuration.ConfigurationManager.AppSettings[key];
     }
   }
 
@@ -93,22 +107,20 @@ namespace ClientBundler
         :
         string.Format(
          "<script type=\"{1}\" id=\"{2}\">{0}</script>", File.ReadAllText(FilePath), scriptType,
-          Regex.Replace(href, "^" + assetRoot + "/", "").Replace("/", "-").Replace(Path.GetExtension(FilePath), "")
+          Regex.Replace(href, "^" + "/" + assetRoot + "/", "").Replace("/", "-").Replace(Path.GetExtension(FilePath), "")
         );
     }
 
     public string LinkTag()
     {
-      return "<link rel=\"stylesheet/less\" type=\"text/css\" href=\"" + Href() + "\">";
+      return "<link rel=\"stylesheet\" type=\"text/css\" href=\"" + Href() + "\">";
     }
 
     string Href()
     {
-      return (assetRoot +
-            (Path.GetDirectoryName(FilePath).Replace(fileRoot, "")).Replace(@"\.", "") +
-            "/" +
-            Path.GetFileName(FilePath)
-          ).Replace(@"\", "/");
+      return ("/" + assetRoot +
+        (FilePath.Replace(@"\", "/").Split(new string[] { assetRoot }, StringSplitOptions.None))[1]
+      );
     }
   }
   class AssetUtility
@@ -118,7 +130,7 @@ namespace ClientBundler
     public AssetUtility(string assetRoot)
     {
       this.assetRoot = assetRoot;
-      this.root = System.Web.HttpContext.Current.Server.MapPath(assetRoot);
+      this.root = System.Web.HttpContext.Current.Server.MapPath("/" + assetRoot);
     }
 
     public Asset GetAsset(string path)
@@ -147,12 +159,13 @@ namespace ClientBundler
       return helper.Raw(
         Options.PreCompiled ?
           new AssetUtility(Options.StylePath).GetAssets("")
+           .Where(x=>Regex.IsMatch(x.FilePath, "(?i)css$"))
            .First()
            .LinkTag()
           :
           new StringBuilder()
-            .Append("<link rel=\"stylesheet/less\" type=\"text/css\" href=\"" + Options.StylePath + "/" + name + ".less" + "\">")
-            .Append("<script src=\"https://raw.github.com/cloudhead/less.js/master/dist/less-1.3.0.min.js\"></script>")
+            .Append("<link rel=\"stylesheet/less\" type=\"text/css\" href=\"/" + Options.StylePath + "/" + name + ".less" + "\">")
+            .Append("<script src=\"https://raw.github.com/JamesKyburz/less.js/master/dist/less-1.3.0.js\"></script>")
             .ToString()
       );
     }
