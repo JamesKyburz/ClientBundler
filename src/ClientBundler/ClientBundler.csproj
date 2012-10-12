@@ -43,7 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientBundler.cs" />
+    <Compile Include="Asset.cs" />
+    <Compile Include="AssetUtility.cs" />
+    <Compile Include="ScriptManifest.cs" />
+    <Compile Include="HtmlHelper.cs" />
+    <Compile Include="Options.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
