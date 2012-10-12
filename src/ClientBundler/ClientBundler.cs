@@ -120,7 +120,7 @@ namespace ClientBundler
     {
       return ("/" + assetRoot +
         (FilePath.Replace(@"\", "/").Split(new string[] { assetRoot }, StringSplitOptions.None))[1]
-      );
+      ).Replace("./", "");
     }
   }
   class AssetUtility
