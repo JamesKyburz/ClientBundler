@@ -75,3 +75,9 @@ Here are the settings for your web.config
 <!-- If false will serve coffeescript.js and less.js -->
 <add key="Assets.Precompiled" value="false" />
 ```
+
+###Nuget
+
+``` nuget
+install-package ClientBundler
+```
