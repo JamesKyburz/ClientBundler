@@ -44,11 +44,13 @@ namespace ClientBundler
       return "<link rel=\"stylesheet\" type=\"text/css\" href=\"" + Href() + "\">";
     }
 
-    string Href()
+    public string Href()
     {
       return ("/" + assetRoot +
         (FilePath.Replace(@"\", "/").Split(new string[] { assetRoot }, StringSplitOptions.None))[1]
-      ).Replace("./", "");
+      )
+      .Replace("./", "")
+      .Replace("//", "/");
     }
   }
 }

@@ -45,6 +45,42 @@ namespace ClientBundler
       );
     }
 
+    public static IHtmlString RenderStyleSources(this HtmlHelper helper, string name)
+    {
+      return helper.Raw(
+        Options.PreCompiled ?
+          new AssetUtility(Options.StylePath).GetAssets("")
+           .Where(x=>Regex.IsMatch(x.FilePath, "(?i)css$"))
+           .First()
+           .Href()
+          :
+          new StringBuilder()
+            .Append("/" + Options.StylePath + "/" + name + ".less")
+            .AppendLine()
+            .Append("https://raw.github.com/JamesKyburz/less.js/master/dist/less-1.3.0.js")
+            .ToString()
+      );
+    }
+    public static IHtmlString RenderScriptSources(this HtmlHelper helper, string name)
+    {
+      return helper.Raw(
+        Options.PreCompiled ?
+         new AssetUtility(Options.ScriptPath).GetAssets("")
+           .First()
+           .Href()
+         :
+         string.Join(Environment.NewLine,
+           new HashSet<string>(
+             new ScriptManifest(name).GetAssets()
+               .Select(x => x.Href())
+           )
+         ) +
+         Environment.NewLine
+         +
+         "http://coffeescript.org/extras/coffee-script.js"
+      );
+    }
+
     public static IHtmlString RenderTemplates(this HtmlHelper helper)
     {
       return helper.Raw(

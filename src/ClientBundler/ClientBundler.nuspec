@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>ClientBundler</id>
-    <version>0.0.2</version>
+    <version>0.0.7</version>
     <title>ClientBundler</title>
     <authors>James Kyburz</authors>
     <projectUrl>https://github.com/JamesKyburz/ClientBundler</projectUrl>
