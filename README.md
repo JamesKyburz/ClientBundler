@@ -21,6 +21,18 @@ In production it is assumed one app*.js and one app*.css. The * is what ever sch
 @Html.RenderScripts("app") // Look for manifest app.js/coffee file (development) or app*.js (production)
 ```
 
+#Helper methods for building appcache
+
+``` razor
+@using ClientBundler;
+CACHE MANIFEST
+
+#@System.DateTime.Now.ToString()
+
+@Html.RenderScriptSources("app")
+@Html.RenderStyleSources("app")
+```
+
 #Development use
 
 Use a manifest file that requires files in the order needed.
