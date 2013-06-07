@@ -22,7 +22,7 @@ namespace ClientBundler
           :
           new StringBuilder()
             .Append("<link rel=\"stylesheet/less\" type=\"text/css\" href=\"/" + Options.StylePath + "/" + name + ".less" + "\">")
-            .Append("<script src=\"https://raw.github.com/JamesKyburz/less.js/master/dist/less-1.3.0.js\"></script>")
+            .Append("<script src=\"https://rawgithub.com/JamesKyburz/less.js/master/dist/less-1.3.0.js\"></script>")
             .ToString()
       );
     }
@@ -57,7 +57,7 @@ namespace ClientBundler
           new StringBuilder()
             .Append("/" + Options.StylePath + "/" + name + ".less")
             .AppendLine()
-            .Append("https://raw.github.com/JamesKyburz/less.js/master/dist/less-1.3.0.js")
+            .Append("https://rawgithub.com/JamesKyburz/less.js/master/dist/less-1.3.0.js")
             .ToString()
       );
     }
