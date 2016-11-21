@@ -22,6 +22,11 @@
       get { return "true" == Setting("Assets.Precompiled"); }
     }
 
+    public static string CoffeeScriptUrl
+    {
+      get { return Setting("Assets.CoffeeScriptUrl") ?? "http://coffeescript.org/v1/extras/coffee-script.js"; }
+    }
+
     static string Setting(string key)
     {
       return System.Configuration.ConfigurationManager.AppSettings[key];

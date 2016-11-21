@@ -77,7 +77,7 @@ namespace ClientBundler
          ) +
          Environment.NewLine
          +
-         "http://coffeescript.org/extras/coffee-script.js"
+         Options.CoffeeScriptUrl
       );
     }
 
