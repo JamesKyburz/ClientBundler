@@ -41,7 +41,7 @@ namespace ClientBundler
                .Select(x => x.ScriptTag())
            )
          ) +
-         "<script src=\"http://coffeescript.org/extras/coffee-script.js\"></script>"
+         string.Format("<script src=\"{0}\"></script>", Options.CoffeeScriptUrl)
       );
     }
 
