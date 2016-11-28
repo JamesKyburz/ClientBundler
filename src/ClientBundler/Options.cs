@@ -24,7 +24,12 @@
 
     public static string CoffeeScriptUrl
     {
-      get { return Setting("Assets.CoffeeScriptUrl") ?? "http://coffeescript.org/v1/extras/coffee-script.js"; }
+      get { return Setting("Assets.CoffeeScriptUrl") ?? "https://cdn.rawgit.com/JamesKyburz/c840e047c278ebd356245739af605432/raw/coffee-script-1.11-1.js"; }
+    }
+
+    public static string LessScriptUrl
+    {
+      get { return Setting("Assets.LessScriptUrl") ?? "https://cdn.rawgit.com/JamesKyburz/less.js/master/dist/less-1.3.0.js"; }
     }
 
     static string Setting(string key)
