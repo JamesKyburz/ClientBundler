@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>ClientBundler</id>
-    <version>0.0.8</version>
+    <version>1.0.0</version>
     <title>ClientBundler</title>
     <authors>James Kyburz</authors>
     <projectUrl>https://github.com/JamesKyburz/ClientBundler</projectUrl>
@@ -10,7 +10,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>ClientBundler</description>
     <releaseNotes>ClientBundler</releaseNotes>
-    <copyright>Copyright 2012</copyright>
+    <copyright>Copyright 2016</copyright>
     <tags>CoffeeScript Less Bundle</tags>
   </metadata>
 </package>
